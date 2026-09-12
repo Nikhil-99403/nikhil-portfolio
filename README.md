@@ -1,5 +1,8 @@
 # Karrolla Nikhil — Futuristic 3D Developer Portfolio
 
+🌐 **Live URL**: [https://nikhil-99403.github.io/nikhil-portfolio/](https://nikhil-99403.github.io/nikhil-portfolio/)  
+📦 **GitHub Repository**: [https://github.com/Nikhil-99403/nikhil-portfolio](https://github.com/Nikhil-99403/nikhil-portfolio)
+
 A developer portfolio website designed with 2026 creative-studio aesthetics, interactive Three.js 3D graphics, smooth Framer Motion interactions, and structured data strictly grounded in Karrolla Nikhil's verified resume.
 
 ---
@@ -16,58 +19,18 @@ A developer portfolio website designed with 2026 creative-studio aesthetics, int
 
 ---
 
-## 🚀 Quick Start
+## 🚀 Quick Commands
 
-### 1. Development Server
+### 1. Run Development Server
 ```bash
 npm install
 npm run dev
 ```
-Open `http://localhost:3000` in your browser.
 
-### 2. Production Build
+### 2. Build & Deploy
 ```bash
-npm run build
-npm run preview
-```
-
----
-
-## 📂 Project Structure
-
-```
-src/
-├── components/
-│   ├── three/
-│   │   ├── HeroScene.tsx            # 3D Cybernetic icosahedron with mouse-reactive gyro
-│   │   ├── BackgroundParticles.tsx  # Ambient cosmic constellation canvas
-│   │   └── ProjectVisualCanvas.tsx  # Abstract 3D visualizers for each case study
-│   ├── CommandPalette.tsx           # Spotlight search (Cmd+K)
-│   ├── CustomCursor.tsx             # Adaptive magnetic cursor with context states
-│   ├── Footer.tsx                   # Minimal footer with back-to-top
-│   ├── Navbar.tsx                   # Floating glassmorphic navigation bar
-│   ├── ResumeModal.tsx              # Complete in-browser resume viewer with print
-│   ├── ScrollProgress.tsx           # Scroll percentage bar & chapter tracker
-│   ├── SocialIcons.tsx              # Native vector SVG icons
-│   └── TiltCard.tsx                 # 3D Gyroscope tilt with dynamic mouse glow
-├── data/
-│   ├── profile.ts                   # Karrolla Nikhil's bio, education, contact info
-│   ├── projects.ts                  # Detailed project case studies
-│   ├── skills.ts                    # Technical skills, DBMS, and core coursework
-│   ├── timeline.ts                  # Education & Tecstasy CBIT volunteer history
-│   └── achievements.ts              # LeetCode DSA milestone
-├── sections/
-│   ├── Hero.tsx                     # Cinematic 3D intro with metrics
-│   ├── About.tsx                    # Engineering foundation & academic track record
-│   ├── Skills.tsx                   # Interactive skills matrix with filters
-│   ├── Projects.tsx                 # Project showcase with 3D tilt cards
-│   ├── ProjectDetailModal.tsx       # Deep-dive architecture & code viewer
-│   ├── ExperienceEducation.tsx      # Chronological illuminated timeline
-│   ├── Achievements.tsx             # LeetCode DSA achievement & confetti trigger
-│   └── Contact.tsx                  # Transmission form, copy email/phone, live IST clock
-└── utils/
-    ├── helpers.ts                   # Class merging & clipboard utility
-    └── sound.ts                     # Web Audio API micro-interaction sound generator
+# Build production bundle and publish to GitHub Pages
+npm run deploy
 ```
 
 ---
@@ -80,9 +43,9 @@ src/
 - **Senior Secondary**: Narayana Junior College, 97.6% (2024)
 - **Secondary School**: Telangana State Model School, CGPA 10.0 (2022)
 - **Projects**:
-  - Library Management System (Java, MySQL, SQLite, Python)
-  - Rock Paper Scissor Game (HTML5, CSS3, JavaScript)
-  - Responsive To-Do List Application (HTML5, CSS3, JavaScript)
+  - [Library Management System](https://github.com/Nikhil-99403/Library-Management-System) (Java, MySQL, SQLite, Python)
+  - [Rock Paper Scissor Game](https://github.com/Nikhil-99403/Rock-Paper-Scissor-Game) (HTML5, CSS3, JavaScript)
+  - [Responsive To-Do List](https://github.com/Nikhil-99403/Todo-List) (HTML5, CSS3, JavaScript)
 - **Core Coursework**: Data Structures, OOP, DBMS
 - **Skills**: C, C++, Java, Python, JavaScript, HTML, CSS, MySQL, Git, Bash, VS Code, AutoCAD
 - **Volunteer Experience**: Tecstasy – CBIT Department Event Volunteer
