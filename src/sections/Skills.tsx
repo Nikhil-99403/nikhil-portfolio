@@ -9,7 +9,9 @@ import {
   Search,
   CheckCircle2,
   Terminal,
-  Cpu
+  Cpu,
+  Zap,
+  Layers
 } from 'lucide-react';
 import { skillCategories } from '../data/skills';
 import { soundEffects } from '../utils/sound';
@@ -34,24 +36,39 @@ export const Skills: React.FC = () => {
     return matchesCategory && matchesQuery;
   });
 
+  // Dynamic Skill Relationship Map
+  const skillRelationships: Record<string, string[]> = {
+    'C++': ['Data Structures', 'OOP', 'Algorithms'],
+    'Java': ['OOP', 'MySQL', 'Database Systems'],
+    'MySQL': ['DBMS', 'SQL Queries', 'Java'],
+    'Python': ['SQLite', 'Scripting', 'Automation'],
+    'JavaScript': ['HTML5', 'CSS3', 'DOM APIs'],
+    'Data Structures': ['C++', 'LeetCode DSA', 'Problem Solving'],
+    'Object-Oriented Programming (OOP)': ['Java', 'C++', 'Architecture'],
+    'Database Management Systems (DBMS)': ['MySQL', 'SQL Queries', 'Relational Schemas']
+  };
+
   return (
-    <section id="skills" className="relative py-28 px-4 sm:px-8 w-full max-w-6xl mx-auto z-10">
+    <section id="skills" className="relative py-32 px-4 sm:px-8 w-full max-w-6xl mx-auto z-10">
+      {/* Ambient Section Glow */}
+      <div className="absolute top-1/3 right-1/4 w-[650px] h-[450px] bg-cyan-500/10 dark:bg-cyan-500/10 rounded-full blur-[150px] pointer-events-none" />
+
       {/* Section Header */}
-      <div className="flex flex-col items-center text-center mb-12">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full glass-panel border border-cyan-500/20 text-cyan-400 text-xs font-mono mb-3">
-          <Cpu className="w-3.5 h-3.5" />
+      <div className="flex flex-col items-center text-center mb-16">
+        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full glass-panel border border-cyan-500/30 text-cyan-300 text-xs font-mono mb-4 shadow-[0_0_15px_rgba(0,242,254,0.2)]">
+          <Cpu className="w-4 h-4 text-cyan-400" />
           <span>Technical Competencies & Systems</span>
         </div>
-        <h2 className="text-3xl sm:text-5xl font-extrabold tracking-tight font-mono text-slate-100 uppercase">
+        <h2 className="text-3xl sm:text-6xl font-black tracking-tight font-mono text-slate-100 uppercase">
           Skills & <span className="text-gradient-cyan">Domain Matrix</span>
         </h2>
-        <p className="mt-3 text-sm sm:text-base text-slate-400 max-w-2xl font-light">
-          An interactive index of programming languages, relational databases, core computer science coursework, and developer tools from my verified curriculum.
+        <p className="mt-4 text-sm sm:text-base text-slate-300 max-w-2xl font-light">
+          An interactive index of programming languages, relational databases, core computer science coursework, and developer tools.
         </p>
       </div>
 
       {/* Control Bar: Categories & Filter Input */}
-      <div className="flex flex-col md:flex-row items-center justify-between gap-4 mb-8 glass-panel p-3 rounded-2xl border border-white/10">
+      <div className="flex flex-col md:flex-row items-center justify-between gap-4 mb-10 glass-panel p-3.5 rounded-2xl border border-white/10 shadow-lg bg-slate-950/70">
         {/* Category Tabs */}
         <div className="flex items-center gap-1.5 overflow-x-auto w-full md:w-auto pb-2 md:pb-0 scrollbar-none">
           {categories.map((cat) => {
@@ -63,9 +80,9 @@ export const Skills: React.FC = () => {
                   soundEffects.playClick();
                   setSelectedCategory(cat);
                 }}
-                className={`px-3 py-1.5 rounded-xl text-xs font-mono transition-all whitespace-nowrap ${
+                className={`relative px-3.5 py-2 rounded-xl text-xs font-mono transition-all whitespace-nowrap ${
                   isSelected
-                    ? 'bg-cyan-500 text-slate-950 font-bold shadow-[0_0_15px_rgba(0,242,254,0.4)]'
+                    ? 'bg-cyan-400 text-slate-950 font-bold shadow-[0_0_20px_rgba(0,242,254,0.45)]'
                     : 'text-slate-400 hover:text-white hover:bg-white/5'
                 }`}
               >
@@ -76,14 +93,14 @@ export const Skills: React.FC = () => {
         </div>
 
         {/* Quick Search */}
-        <div className="relative w-full md:w-64">
-          <Search className="w-3.5 h-3.5 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
+        <div className="relative w-full md:w-72">
+          <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
           <input
             type="text"
             placeholder="Filter skills (e.g. Java, C++, MySQL)..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full bg-slate-900/60 border border-white/10 rounded-xl pl-9 pr-3 py-1.5 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-cyan-500/50 font-mono"
+            className="w-full bg-slate-900/80 border border-white/10 rounded-xl pl-10 pr-3.5 py-2 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-cyan-400 font-mono transition-colors"
           />
         </div>
       </div>
@@ -91,68 +108,90 @@ export const Skills: React.FC = () => {
       {/* Interactive Skills Grid */}
       <motion.div
         layout
-        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"
+        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5"
       >
         <AnimatePresence>
           {filteredSkills.map((skill) => {
             const isHovered = activeSkill === skill.name;
+            const related = skillRelationships[skill.name];
+
             return (
               <motion.div
                 layout
                 key={skill.name}
-                initial={{ opacity: 0, scale: 0.95 }}
+                initial={{ opacity: 0, scale: 0.94 }}
                 animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.95 }}
-                transition={{ duration: 0.2 }}
+                exit={{ opacity: 0, scale: 0.94 }}
+                transition={{ duration: 0.25 }}
                 onMouseEnter={() => {
                   soundEffects.playHover();
                   setActiveSkill(skill.name);
                 }}
                 onMouseLeave={() => setActiveSkill(null)}
                 data-cursor="SKILL"
-                className={`glass-panel p-5 rounded-2xl border transition-all duration-300 relative overflow-hidden group cursor-pointer ${
+                className={`glass-panel p-6 rounded-2xl border transition-all duration-300 relative overflow-hidden group cursor-pointer ${
                   isHovered
-                    ? 'border-cyan-400 shadow-[0_0_25px_rgba(0,242,254,0.2)] bg-slate-900/80 -translate-y-1'
-                    : 'border-white/10 hover:border-cyan-500/30 bg-slate-950/40'
+                    ? 'border-cyan-400 shadow-[0_0_30px_rgba(0,242,254,0.25)] bg-slate-900/90 -translate-y-1.5'
+                    : 'border-white/10 hover:border-cyan-500/40 bg-slate-950/50'
                 }`}
               >
-                {/* Accent Background Glow */}
+                {/* Accent Background Ambient Glow */}
                 <div
-                  className={`absolute -top-12 -right-12 w-28 h-28 bg-gradient-to-br ${skill.accent} rounded-full blur-2xl opacity-10 group-hover:opacity-25 transition-opacity`}
+                  className={`absolute -top-12 -right-12 w-32 h-32 bg-gradient-to-br ${skill.accent} rounded-full blur-2xl opacity-15 group-hover:opacity-35 transition-opacity`}
                 />
 
-                <div className="relative z-10 flex flex-col justify-between h-full">
+                <div className="relative z-10 flex flex-col justify-between h-full space-y-4">
                   <div>
                     <div className="flex items-center justify-between mb-2">
-                      <h4 className="text-lg font-bold text-white font-mono flex items-center gap-2 group-hover:text-cyan-300 transition-colors">
+                      <h4 className="text-xl font-bold text-white font-mono flex items-center gap-2 group-hover:text-cyan-300 transition-colors">
                         <span>{skill.name}</span>
                         {skill.tag && (
-                          <span className="text-[9px] font-mono px-2 py-0.5 rounded-full bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 font-normal">
+                          <span className="text-[10px] font-mono px-2.5 py-0.5 rounded-full bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 font-normal">
                             {skill.tag}
                           </span>
                         )}
                       </h4>
-                      <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-white/5 text-slate-400 border border-white/5">
+                      <span className="text-[10px] font-mono px-2.5 py-0.5 rounded-lg bg-white/5 text-slate-400 border border-white/5">
                         {skill.category}
                       </span>
                     </div>
 
-                    <div className="text-xs font-mono text-cyan-400/90 mb-2 font-medium">
-                      {skill.level}
+                    <div className="text-xs font-mono text-cyan-400 mb-2 font-medium flex items-center gap-1.5">
+                      <Zap className="w-3 h-3 text-cyan-400" />
+                      <span>{skill.level}</span>
                     </div>
 
-                    <p className="text-xs text-slate-400 leading-relaxed font-light">
+                    <p className="text-xs text-slate-300 leading-relaxed font-light">
                       {skill.details}
                     </p>
                   </div>
 
-                  {/* Micro connection indicator */}
-                  <div className="mt-4 pt-3 border-t border-white/5 flex items-center justify-between text-[10px] font-mono text-slate-500">
+                  {/* Connected Domain Pills on Hover */}
+                  {related && (
+                    <div className="pt-2 border-t border-white/5">
+                      <span className="text-[10px] font-mono text-slate-400 block mb-1.5">
+                        Connected Technologies:
+                      </span>
+                      <div className="flex flex-wrap gap-1">
+                        {related.map((rel) => (
+                          <span
+                            key={rel}
+                            className="px-2 py-0.5 rounded-md bg-cyan-950/50 border border-cyan-800/60 text-[10px] font-mono text-cyan-300"
+                          >
+                            {rel}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Bottom Verification Strip */}
+                  <div className="pt-3 border-t border-white/5 flex items-center justify-between text-[10px] font-mono text-slate-500">
                     <span className="flex items-center gap-1 text-slate-400">
                       <Terminal className="w-3 h-3 text-cyan-400" />
-                      <span>Verified Coursework</span>
+                      <span>Verified Curriculum</span>
                     </span>
-                    <span className="text-cyan-400/60 group-hover:text-cyan-400 transition-colors">
+                    <span className="text-cyan-400/80 group-hover:text-cyan-300 transition-colors font-medium">
                       Active
                     </span>
                   </div>
@@ -163,21 +202,21 @@ export const Skills: React.FC = () => {
         </AnimatePresence>
       </motion.div>
 
-      {/* Coursework & Systems Highlight Strip */}
-      <div className="mt-12 glass-panel p-6 rounded-2xl border border-cyan-500/20 bg-gradient-to-r from-cyan-950/20 via-slate-900/60 to-purple-950/20">
+      {/* Coursework & Foundation Highlight Strip */}
+      <div className="mt-14 glass-panel p-7 rounded-2xl border border-cyan-500/30 bg-gradient-to-r from-cyan-950/30 via-slate-950/70 to-purple-950/30 shadow-xl">
         <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-          <div className="space-y-1 text-center md:text-left">
-            <h4 className="text-sm font-bold font-mono text-white flex items-center justify-center md:justify-start gap-2">
-              <Binary className="w-4 h-4 text-cyan-400" />
+          <div className="space-y-1.5 text-center md:text-left">
+            <h4 className="text-base font-bold font-mono text-white flex items-center justify-center md:justify-start gap-2.5">
+              <Binary className="w-5 h-5 text-cyan-400" />
               <span>Core CSE Focus: Data Structures • OOP • DBMS</span>
             </h4>
-            <p className="text-xs text-slate-400 max-w-xl">
-              Equipped with deep foundational principles of memory addressing, computational complexity analysis, schema normalization, and object-oriented architecture.
+            <p className="text-xs sm:text-sm text-slate-300 max-w-xl font-light leading-relaxed">
+              Equipped with foundational principles of memory addressing, computational complexity analysis, schema normalization, and object-oriented architecture.
             </p>
           </div>
 
           <div className="flex items-center gap-3 shrink-0">
-            <span className="px-3 py-1.5 rounded-xl bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 font-mono text-xs">
+            <span className="px-4 py-2 rounded-xl bg-cyan-500/10 border border-cyan-500/40 text-cyan-300 font-mono text-xs font-semibold shadow-inner">
               CBIT CSE Department
             </span>
           </div>
